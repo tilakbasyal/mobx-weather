@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 
-import CounterStore from "./CounterStore";
-import Counter from "./Counter";
+import WeatherStore from "./WeatherStore";
+import Weather from "./Weather";
 
 class App extends Component {
   render() {
-    return <Counter store={CounterStore} />;
+    return <Weather store={WeatherStore} />;
   }
 }
 
