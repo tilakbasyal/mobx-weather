@@ -6,10 +6,12 @@
     "react-scripts": "1.0.12"
   },
   "dependencies": {
+    "@material-ui/core": "^4.8.0",
+    "clsx": "^1.0.4",
     "mobx": "^3.2.2",
     "mobx-react": "^4.2.2",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "scripts": {
     "start": "react-scripts start",
