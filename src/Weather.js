@@ -2,10 +2,17 @@ import React from "react";
 import { observer } from "mobx-react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Card from "@material-ui/core/Card";
-import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from "@material-ui/core";
+import {
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Grid,
+  Typography
+} from "@material-ui/core";
 import clsx from "clsx";
-import useStyles from './styles'
-
+import useStyles from "./styles";
 
 function StyledRadio(props) {
   const classes = useStyles();
@@ -14,7 +21,7 @@ function StyledRadio(props) {
     <Radio
       className={classes.root}
       disableRipple
-      color="default"
+      color='default'
       checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
       icon={<span className={classes.icon} />}
       {...props}
@@ -30,47 +37,60 @@ export default observer(
     render() {
       return (
         <React.Fragment>
-          <FormControl component='fieldset'>
-            <FormLabel component='legend'>Select Your Metric</FormLabel>
-            <RadioGroup
-              defaultValue='farenheiht'
-              aria-label='temperature'
-              name='customized-radios'
+          {this.props.store.loading ? (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100vh"
+              }}
             >
-              <FormControlLabel
-                value='farenheiht'
-                control={<StyledRadio />}
-                label='Farenheiht'
-                onClick={this.props.store.convertFahrenheit}
-              />
-              <FormControlLabel
-                value='celcius'
-                control={<StyledRadio />}
-                label='Celcius'
-                onClick={this.props.store.convertCelcius}
-              />
-            </RadioGroup>
-          </FormControl>
-          {/* <button onClick={this.props.store.convertCelcius}>Celcius</button>
-          <button onClick={this.props.store.convertFahrenheit}>
-            Farenheiht
-          </button> */}
-          <div>
-            {this.props.store.loading ? (
               <CircularProgress />
-            ) : (
-              Object.keys(this.props.store.freshObject).map(item => (
-                <Card key={item} style={{ margin: "16px", padding: "8px" }}>
-                  <p>Date : {item}</p>
-                  <p>
-                    Average Temprature:{" "}
-                    {Number(this.props.store.freshObject[item]).toFixed(2)}
-                    {this.props.store.isFahrenheit ? "°F" : "°C"}
-                  </p>
-                </Card>
-              ))
-            )}
-          </div>
+            </div>
+          ) : (
+            <React.Fragment>
+              <FormControl component='fieldset' style={{ width: "100%" }}>
+                <FormLabel component='legend'>Select Your Metric</FormLabel>
+                <RadioGroup
+                  defaultValue='farenheiht'
+                  aria-label='temperature'
+                  name='customized-radios'
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-around"
+                  }}
+                >
+                  <FormControlLabel
+                    value='farenheiht'
+                    control={<StyledRadio />}
+                    label='Farenheiht'
+                    onClick={this.props.store.convertFahrenheit}
+                  />
+                  <FormControlLabel
+                    value='celcius'
+                    control={<StyledRadio />}
+                    label='Celcius'
+                    onClick={this.props.store.convertCelcius}
+                  />
+                </RadioGroup>
+              </FormControl>
+              <Grid container spacing={2}>
+                {Object.keys(this.props.store.freshObject).map(item => (
+                  <Grid item xs={12} md={4} key={item}>
+                    <Card>
+                      <Typography>Date :<br/> {item}</Typography>
+                      <Typography>
+                        Average Temprature:{" "}<br/>
+                        {Number(this.props.store.freshObject[item]).toFixed(2)}
+                        {this.props.store.isFahrenheit ? "°F" : "°C"}
+                      </Typography>
+                    </Card>
+                  </Grid>
+                ))}
+              </Grid>
+            </React.Fragment>
+          )}
         </React.Fragment>
       );
     }

@@ -39,6 +39,13 @@ const useStyles = makeStyles({
         backgroundColor: '#106ba3',
       },
     },
+    fieldset: {
+      width: '100%'
+    },
+    radioGroup: {
+      flexDirection: 'row',
+      justifyContent: 'space-around'
+    }
   });
   
 
