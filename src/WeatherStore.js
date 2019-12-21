@@ -57,24 +57,13 @@ export default extendObservable(this, {
         })))
       })
 
+      this.initialTempInFar = Object.values(this.freshObject);
 
 
-
+      // console.log(this.initialTempInFar, "temp in far")
       // console.log(Object.values(this.freshObject), "solved")
     }); 
   }),
 
 
-  // convertCelcius: action(() => {
-  //   this.freshObject = Object.assign(...Object.keys(dates).map((v,i) => ({
-  //     [v]: ((Number((Object.values(dates)[i])/Object.values(timeSegments)[i])-32)*5/9)
-  //   })))
-  //   console.log(Object.values(this.freshObject), "solved")
-
-  // }),
-  // convertFahrenheit: action(() => {
-  //   this.freshObject = Object.assign(...Object.keys(dates).map((v,i) => ({
-  //     [v]: (Object.values(dates)[i])/Object.values(timeSegments)[i]
-  //   })))
-  // })
 });
