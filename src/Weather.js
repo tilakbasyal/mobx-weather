@@ -9,7 +9,8 @@ import {
   FormControlLabel,
   Radio,
   Grid,
-  Typography
+  Typography,
+  Button
 } from "@material-ui/core";
 import clsx from "clsx";
 import useStyles from "./styles";
@@ -75,13 +76,19 @@ export default observer(
                   />
                 </RadioGroup>
               </FormControl>
+              <Grid container justify="space-between" style={{marginBottom: '16px'}}>
+                <Button>Next</Button>
+                <Button>Previous</Button>
+              </Grid>
               <Grid container spacing={2}>
                 {Object.keys(this.props.store.freshObject).map(item => (
                   <Grid item xs={12} md={4} key={item}>
                     <Card>
-                      <Typography>Date :<br/> {item}</Typography>
                       <Typography>
-                        Average Temprature:{" "}<br/>
+                        Date :<br /> {item}
+                      </Typography>
+                      <Typography>
+                        Average Temprature: <br />
                         {Number(this.props.store.freshObject[item]).toFixed(2)}
                         {this.props.store.isFahrenheit ? "°F" : "°C"}
                       </Typography>
