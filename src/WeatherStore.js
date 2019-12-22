@@ -89,6 +89,7 @@ export default extendObservable(this, {
         .filter(item => item !== undefined);
         this.date = Object.keys(Object.assign({}, ...dateAndTempArray));
         this.temperature = Object.values(Object.assign({}, ...dateAndTempArray));
+        console.log(this.temperature, "display chart")
       })
     })
 });
