@@ -1,13 +1,29 @@
 const styles = () => ({
-  media: {
-    height: '120px',
-    width: '120px',
-    margin: '20px auto'
+  appMainDiv: {
+    marginTop: "60px"
   },
-  cardHeaderTitle : {
-    fontSize: '16px',
-    textAlign: 'center'
-
+  mainHeading: {
+    fontSize: "32px", 
+    marginBottom: "10px", 
+    color:'#7272ff', 
+    fontWeight: 700
+  },
+  headerDivider: {
+    height: "4px",
+    maxWidth: "150px",
+    backgroundColor: "#09e1c0",
+    margin: "0 auto",
+    borderRadius: 4,
+    marginBottom: "40px"
+  },
+  media: {
+    height: "120px",
+    width: "120px",
+    margin: "20px auto"
+  },
+  cardHeaderTitle: {
+    fontSize: "16px",
+    textAlign: "center"
   },
   circularProgress: {
     height: "100vh",
@@ -17,13 +33,13 @@ const styles = () => ({
   },
   averageTempratureDiv: {
     display: "flex",
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginBottom: '16px'
+    flexDirection: "column",
+    alignItems: "center",
+    marginBottom: "16px"
     // justifyContent: "space-between"
   },
   formControl: {
-    width: "100%",
+    width: "100%"
   },
   formLabel: {
     width: "100%",
@@ -32,11 +48,11 @@ const styles = () => ({
     fontWeight: 600
   },
   opacity: {
-    opacity: .54
+    opacity: 0.54
   },
   radioGroup: {
     flexDirection: "row",
-    justifyContent: "space-around" 
+    justifyContent: "space-around"
   },
   divider: {
     margin: "1rem 0"
@@ -46,20 +62,20 @@ const styles = () => ({
   },
   weatherCardGridContainer: {
     // marginBottom: "2.5rem",
-    width: '100%'
+    width: "100%"
   },
   singleWeatherGrid: {
     maxWidth: "320px",
-    marginBottom: '2.5rem'
+    marginBottom: "2.5rem"
   },
   singleWeatherGridCard: {
     padding: "8px 16px",
-    background: 'linear-gradient(#0B067A, #4F1484)',
-    color: '#fff',
-    borderRadius: '8px'
+    background: "linear-gradient(#0B067A, #4F1484)",
+    color: "#fff",
+    borderRadius: "8px"
   },
   superScript: {
-    fontSize: '1.5rem'
+    fontSize: "1.5rem"
   }
 });
 

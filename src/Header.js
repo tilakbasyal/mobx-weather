@@ -1,25 +1,20 @@
 import React from "react";
-import { Typography, Divider } from "@material-ui/core";
+import { Typography, Divider, withStyles } from "@material-ui/core";
+import styles from "./MainCss";
 
-function Header() {
+function Header(props) {
+  const { classes } = props;
   return (
     <React.Fragment>
       <Typography
-        style={{ fontSize: "32px", marginBottom: "10px", color:'#7272ff', fontWeight: 700 }}
+        className={classes.mainHeading}
         align='center'
       >
         Weather App Using ReactJs, MobX, react-chart-js and material-ui
       </Typography>
-      <Divider  style={{
-          height: '4px',
-          maxWidth: '150px',          
-          backgroundColor: '#09e1c0',          
-          margin: '0 auto',          
-          borderRadius: 4,
-          marginBottom: '40px'
-      }}/>
+      <Divider className={classes.headerDivider}/>
     </React.Fragment>
   );
 }
 
-export default Header;
+export default  withStyles(styles)(Header);
