@@ -3,13 +3,9 @@ import { Bar } from "react-chartjs-2";
 import { observer } from "mobx-react";
 
 export default observer(
-  class Chart extends Component {
-      constructor(props) {
-          super(props);
-      }
-      
+  class Chart extends Component {      
     render() {
-        console.log(this.props.store.temperature.$mobx.values, "chart")        
+        // console.log(this.props.store.temperature.$mobx.values, "chart")        
       return (
         <div>
           <Bar
@@ -18,10 +14,10 @@ export default observer(
                 label: 'Temprature',
                 data:this.props.store.temperature.$mobx.values ,
                 backgroundColor: [
-                    '#085ef7','#085ef7','#085ef7','#085ef7','#085ef7','#085ef7','#085ef7','#085ef7'
+                    '#fe938c','#5a9367','#7a5c61','#88a0a8','#798071','#4c5c68 ','#1985a1 ','#f2c078'
                 ]
             }]}}
-            width={80}
+            width={100}
             height={500}
             options={{ 
               title: {
@@ -31,6 +27,7 @@ export default observer(
               },
               maintainAspectRatio: false,
               legend: {
+                display: false,
                 position: 'bottom'
               }
              }}

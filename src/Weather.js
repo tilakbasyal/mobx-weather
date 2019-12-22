@@ -1,8 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Card from "@material-ui/core/Card";
 import {
+  CircularProgress,
   FormControl,
   FormLabel,
   RadioGroup,
@@ -11,15 +10,21 @@ import {
   Grid,
   Typography,
   Button,
-  Divider
+  Divider,
+  withStyles,
+  CardMedia,
+  CardHeader,
+  Card
 } from "@material-ui/core";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import clsx from "clsx";
-import useStyles from "./styles";
+import useStyles from "./RadioButtonStyles";
 import Chart from "./Chart";
 import WeatherStore from "./WeatherStore";
-
+import styles from "./MainCss";
+import Header from "./Header";
+import weather from "./assets/weather.png";
 // import './App.css';
 
 function StyledRadio(props) {
@@ -37,7 +42,7 @@ function StyledRadio(props) {
   );
 }
 
-export default observer(
+export default withStyles(styles) (observer(
   class People extends React.Component {
     constructor(props) {
       super(props);
@@ -45,7 +50,8 @@ export default observer(
         start: 0,
         end: 3,
         elemId: "",
-        hover: false
+        hover: false,
+        chartShow: false
       };
       this.handleNext = this.handleNext.bind(this);
       this.handlePrevious = this.handlePrevious.bind(this);
@@ -57,7 +63,7 @@ export default observer(
     }
     handleCardClick = (mapper, i) => {
       // console.log(i, mapper, "isdie card");
-      this.setState({ ...this.state, elemId: i, hover: true });
+      this.setState({ ...this.state, elemId: i, hover: true, chartShow: true });
       this.props.store.displayChart(mapper, i);
       // console.log(mapper[i], 'index')
     };
@@ -92,29 +98,20 @@ export default observer(
       );
       // console.log(Object.keys(this.props.store.freshObject), "weather");
       const { start, end, hover, elemId } = this.state;
+      const { classes } = this.props;
       return (
         <React.Fragment>
           {this.props.store.loading ? (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100vh"
-              }}
-            >
+            <div className={classes.circularProgress}>
               <CircularProgress />
             </div>
           ) : (
             <React.Fragment>
-              <FormControl component='fieldset' style={{ width: "100%" }}>
+              <Header />
+              <FormControl component='fieldset' className={classes.formControl}>
                 <FormLabel
                   component='legend'
-                  style={{
-                    width: "100%",
-                    textAlign: "center",
-                    fontSize: "2rem"
-                  }}
+                  className={classes.formLabel}
                 >
                   Select Your Metric
                 </FormLabel>
@@ -122,10 +119,7 @@ export default observer(
                   defaultValue='farenheiht'
                   aria-label='temperature'
                   name='customized-radios'
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-around"
-                  }}
+                  className={classes.radioGroup}
                 >
                   <FormControlLabel
                     value='farenheiht'
@@ -141,11 +135,11 @@ export default observer(
                   />
                 </RadioGroup>
               </FormControl>
-              <Divider style={{ margin: "1rem 0" }} />
+              <Divider className={classes.divider} />
               <Grid
                 container
                 justify='space-between'
-                style={{ marginBottom: "16px" }}
+                className={classes.buttonGridContainer}
               >
                 <Button
                   variant='contained'
@@ -164,14 +158,16 @@ export default observer(
                   <ArrowForwardIosIcon />
                 </Button>
               </Grid>
-              <Grid container spacing={2} justify='space-evenly'>
+              <Grid
+                container
+                // spacing={2}
+                justify='space-evenly'
+                className={classes.weatherCardGridContainer}
+              >
                 {mapper.map((item, i) => {
-                  {
-                    // console.log(mapper[i], "tilak");
-                  }
                   return (
                     <Grid
-                      style={{ maxWidth: "320px" }}
+                      className={classes.singleWeatherGrid}
                       item
                       xs={12}
                       md={4}
@@ -182,36 +178,48 @@ export default observer(
                         onMouseLeave={() => this.handleMouseLeave(i)}
                         onMouseEnter={() => this.handleMouseEnter(i)}
                         raised={hover && elemId === i}
-                        style={{ padding: "16px" }}
+                        className={classes.singleWeatherGridCard}
                       >
-                        <Typography>
-                          Date :<br /> {item}
-                        </Typography>
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between"
-                          }}
-                        >
-                          <Typography>Average Temprature:</Typography>
-                          <Typography variant='h3'>
+                        <CardHeader
+                        classes={{
+                          title: classes.cardHeaderTitle
+                        }}
+                        title="Kathmandu, Nepal"
+                        />
+                        <CardMedia
+                          className={classes.media}
+                          image={weather}
+                          title="Weather Image"
+                        />
+                        <div className={classes.averageTempratureDiv}>
+                          <Typography variant="body2">Average Temp:</Typography>
+                          <Typography variant='h4'>
                             {Number(this.props.store.freshObject[item]).toFixed(
                               2
                             )}
-                            {this.props.store.isFahrenheit ? "°F" : "°C"}
+                            {this.props.store.isFahrenheit ? <sup className={classes.superScript}>°F</sup> : <sup className={classes.superScript}>°C</sup>}
                           </Typography>
                         </div>
+                        <Typography align="center" gutterBottom>
+                          {item}
+                        </Typography>
                       </Card>
                     </Grid>
                   );
                 })}
               </Grid>
 
-              <Chart store={WeatherStore} />
+              {/* {chartShow ? ( */}
+                <Chart store={WeatherStore} />
+              {/* ) : (
+                <Typography variant='h4' align='center' className={`${classes.formLabel} ${classes.opacity}`}>
+                  Select a weather Card to see the Bar Chart
+                </Typography>
+              )} */}
             </React.Fragment>
           )}
         </React.Fragment>
       );
     }
   }
-);
+));

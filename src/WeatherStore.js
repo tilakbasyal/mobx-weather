@@ -12,7 +12,7 @@ export default extendObservable(this, {
   loadWeather: action(async () => {
     this.loading = true;
     const response = await fetch(
-      "http://api.openweathermap.org/data/2.5/forecast?q=Kathmandu&units=imperial&APPID=c7910a3f13b2a102322929da4f00d2ab&cnt=40"
+      "https://api.openweathermap.org/data/2.5/forecast?q=Kathmandu&units=imperial&APPID=c7910a3f13b2a102322929da4f00d2ab&cnt=40"
     );
     const json = await response.json();
     runInAction(() => {
@@ -88,6 +88,7 @@ export default extendObservable(this, {
           newObj[slicedDateArray] = main.temp;
           return newObj;
           }
+          return dateAndTempArray;
         })
         .filter(item => item !== undefined);
         this.date = Object.keys(Object.assign({}, ...dateAndTempArray));
