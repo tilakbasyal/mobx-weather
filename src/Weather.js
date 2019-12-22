@@ -13,10 +13,13 @@ import {
   Button,
   Divider
 } from "@material-ui/core";
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import clsx from "clsx";
 import useStyles from "./styles";
+import Chart from "./Chart";
+import WeatherStore from "./WeatherStore";
+
 // import './App.css';
 
 function StyledRadio(props) {
@@ -41,7 +44,7 @@ export default observer(
       this.state = {
         start: 0,
         end: 3,
-        elemId: '',
+        elemId: "",
         hover: false
       };
       this.handleNext = this.handleNext.bind(this);
@@ -52,16 +55,19 @@ export default observer(
     componentDidMount() {
       this.props.store.loadWeather();
     }
-    handleCardClick = (index) => {
-      console.log(index, "isdie card")
-    }
-    handleMouseEnter = (index) => {
-      // console.log(index, "index")
-      this.setState({ ...this.state,elemId: index, hover: true });
+    handleCardClick = (mapper, i) => {
+      // console.log(i, mapper, "isdie card");
+      this.setState({ ...this.state, elemId: i, hover: true });
+      this.props.store.displayChart(mapper, i);
+      // console.log(mapper[i], 'index')
     };
-  
-    handleMouseLeave = (index) => {
-      this.setState({ ...this.state,elemId: '', hover: false });
+    handleMouseEnter = index => {
+      // console.log(index, "index")
+      this.setState({ ...this.state, elemId: index, hover: true });
+    };
+
+    handleMouseLeave = index => {
+      this.setState({ ...this.state, elemId: "", hover: false });
     };
     handleNext = () => {
       // console.log(this.state, "previous");
@@ -84,7 +90,7 @@ export default observer(
         this.state.start,
         this.state.end
       );
-      // console.log([...this.props.store.weather], "weather");
+      // console.log(Object.keys(this.props.store.freshObject), "weather");
       const { start, end, hover, elemId } = this.state;
       return (
         <React.Fragment>
@@ -102,7 +108,16 @@ export default observer(
           ) : (
             <React.Fragment>
               <FormControl component='fieldset' style={{ width: "100%" }}>
-                <FormLabel component='legend' style={{width: '100%', textAlign:'center', fontSize:'2rem'}}>Select Your Metric</FormLabel>
+                <FormLabel
+                  component='legend'
+                  style={{
+                    width: "100%",
+                    textAlign: "center",
+                    fontSize: "2rem"
+                  }}
+                >
+                  Select Your Metric
+                </FormLabel>
                 <RadioGroup
                   defaultValue='farenheiht'
                   aria-label='temperature'
@@ -126,7 +141,7 @@ export default observer(
                   />
                 </RadioGroup>
               </FormControl>
-              <Divider style={{ margin: '1rem 0'}} />
+              <Divider style={{ margin: "1rem 0" }} />
               <Grid
                 container
                 justify='space-between'
@@ -149,38 +164,50 @@ export default observer(
                   <ArrowForwardIosIcon />
                 </Button>
               </Grid>
-              <Grid container spacing={2} justify="space-evenly">
-                {/* <div> */}
-                {mapper.map((item,i) => (
-                  <Grid
-                    style={{ maxWidth: '320px' }}
-                    item
-                    xs={12}
-                    md={4}
-                    key={item}
-                    onClick={(i) => this.handleCardClick(i)}
-                  >
-                    <Card 
-                    onMouseLeave={() => this.handleMouseLeave(i)}
-                    onMouseEnter={() => this.handleMouseEnter(i)}
-                    raised={hover && elemId === i}
-                    style={{padding: '16px'}}
+              <Grid container spacing={2} justify='space-evenly'>
+                {mapper.map((item, i) => {
+                  {
+                    // console.log(mapper[i], "tilak");
+                  }
+                  return (
+                    <Grid
+                      style={{ maxWidth: "320px" }}
+                      item
+                      xs={12}
+                      md={4}
+                      key={item}
+                      onClick={() => this.handleCardClick(mapper, i)}
                     >
-                      <Typography>
-                        Date :<br /> {item}
-                      </Typography>
-                      <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                        <Typography>Average Temprature:</Typography>
-                        <Typography variant='h3'>
-                          {Number(this.props.store.freshObject[item]).toFixed(2)}
-                          {this.props.store.isFahrenheit ? "°F" : "°C"}
+                      <Card
+                        onMouseLeave={() => this.handleMouseLeave(i)}
+                        onMouseEnter={() => this.handleMouseEnter(i)}
+                        raised={hover && elemId === i}
+                        style={{ padding: "16px" }}
+                      >
+                        <Typography>
+                          Date :<br /> {item}
                         </Typography>
-                      </div>
-                    </Card>
-                  </Grid>
-                ))}
-                {/* </div> */}
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between"
+                          }}
+                        >
+                          <Typography>Average Temprature:</Typography>
+                          <Typography variant='h3'>
+                            {Number(this.props.store.freshObject[item]).toFixed(
+                              2
+                            )}
+                            {this.props.store.isFahrenheit ? "°F" : "°C"}
+                          </Typography>
+                        </div>
+                      </Card>
+                    </Grid>
+                  );
+                })}
               </Grid>
+
+              <Chart store={WeatherStore} />
             </React.Fragment>
           )}
         </React.Fragment>
