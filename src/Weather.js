@@ -14,7 +14,7 @@ import {
   withStyles,
   CardMedia,
   CardHeader,
-  Card
+  Card,
 } from "@material-ui/core";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
@@ -25,7 +25,6 @@ import WeatherStore from "./WeatherStore";
 import styles from "./MainCss";
 import Header from "./Header";
 import weather from "./assets/weather.png";
-// import './App.css';
 
 function StyledRadio(props) {
   const classes = useStyles();
@@ -62,13 +61,10 @@ export default withStyles(styles) (observer(
       this.props.store.loadWeather();
     }
     handleCardClick = (mapper, i) => {
-      // console.log(i, mapper, "isdie card");
       this.setState({ ...this.state, elemId: i, hover: true, chartShow: true });
       this.props.store.displayChart(mapper, i);
-      // console.log(mapper[i], 'index')
     };
     handleMouseEnter = index => {
-      // console.log(index, "index")
       this.setState({ ...this.state, elemId: index, hover: true });
     };
 
@@ -76,7 +72,6 @@ export default withStyles(styles) (observer(
       this.setState({ ...this.state, elemId: "", hover: false });
     };
     handleNext = () => {
-      // console.log(this.state, "previous");
       this.setState({
         ...this.state,
         start: this.state.start + 1,
@@ -91,12 +86,10 @@ export default withStyles(styles) (observer(
       });
     };
     render() {
-      // const arrayLength = Object.keys(this.props.store.freshObject).length;
       const mapper = Object.keys(this.props.store.freshObject).slice(
         this.state.start,
         this.state.end
       );
-      // console.log(Object.keys(this.props.store.freshObject), "weather");
       const { start, end, hover, elemId } = this.state;
       const { classes } = this.props;
       return (
@@ -112,6 +105,7 @@ export default withStyles(styles) (observer(
                 <FormLabel
                   component='legend'
                   className={classes.formLabel}
+                  disabled
                 >
                   Select Your Metric
                 </FormLabel>
@@ -160,7 +154,6 @@ export default withStyles(styles) (observer(
               </Grid>
               <Grid
                 container
-                // spacing={2}
                 justify='space-evenly'
                 className={classes.weatherCardGridContainer}
               >
@@ -192,30 +185,36 @@ export default withStyles(styles) (observer(
                           title="Weather Image"
                         />
                         <div className={classes.averageTempratureDiv}>
-                          <Typography variant="body2">Average Temp:</Typography>
-                          <Typography variant='h4'>
+                          <Typography variant="body2">Average Temperature</Typography>
+                          <Typography variant='h3'>
                             {Number(this.props.store.freshObject[item]).toFixed(
                               2
                             )}
                             {this.props.store.isFahrenheit ? <sup className={classes.superScript}>°F</sup> : <sup className={classes.superScript}>°C</sup>}
                           </Typography>
                         </div>
-                        <Typography align="center" gutterBottom>
+                        <CardHeader
+                        classes={{
+                          title: classes.cardHeaderTitle
+                        }}
+                        title={item}
+                        />
+
+                        {/* <Typography align="center" gutterBottom>
                           {item}
-                        </Typography>
+                        </Typography> */}
                       </Card>
                     </Grid>
                   );
                 })}
               </Grid>
 
-              {/* {chartShow ? ( */}
-                <Chart store={WeatherStore} />
-              {/* ) : (
-                <Typography variant='h4' align='center' className={`${classes.formLabel} ${classes.opacity}`}>
-                  Select a weather Card to see the Bar Chart
-                </Typography>
-              )} */}
+              <div className={classes.chartContainer}>
+                <Typography className={`${classes.formLabel} ${classes.opacity} ${classes.divider}`}>Select a weather Card to see the Bar Chart</Typography>
+              <Chart store={WeatherStore} />
+              </div>
+
+              
             </React.Fragment>
           )}
         </React.Fragment>

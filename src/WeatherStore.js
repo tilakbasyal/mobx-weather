@@ -44,10 +44,7 @@ export default extendObservable(this, {
             Number(Object.values(val));
           return acc;
         }, {});
-      // console.log(Object.values(dates), "temp");
-      // console.log(Object.keys(dates), 'dates')
-      // console.log(Object.values(timeSegments), 'times');
-
+        
       this.freshObject = Object.assign(
         ...Object.keys(dates).map((v, i) => ({
           [v]: Object.values(dates)[i] / Object.values(timeSegments)[i]
@@ -67,7 +64,6 @@ export default extendObservable(this, {
               9
           }))
         );
-        // return this.freshObject
       };
       this.convertFahrenheit = () => {
         this.isFahrenheit = true;

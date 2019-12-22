@@ -10,7 +10,7 @@ function Header(props) {
         className={classes.mainHeading}
         align='center'
       >
-        Weather App Using ReactJs, MobX, react-chart-js and material-ui
+        Weather App Using ReactJs, MobX, react-chartjs-2 and material-ui
       </Typography>
       <Divider className={classes.headerDivider}/>
     </React.Fragment>

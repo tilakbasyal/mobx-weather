@@ -29,14 +29,13 @@ const styles = () => ({
     height: "100vh",
     display: "flex",
     justifyContent: "center",
-    alignItems: "Center"
+    alignItems: "center"
   },
   averageTempratureDiv: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    marginBottom: "16px"
-    // justifyContent: "space-between"
+    marginBottom: "20px"
   },
   formControl: {
     width: "100%"
@@ -48,7 +47,7 @@ const styles = () => ({
     fontWeight: 600
   },
   opacity: {
-    opacity: 0.54
+    opacity: 0.38
   },
   radioGroup: {
     flexDirection: "row",
@@ -61,7 +60,6 @@ const styles = () => ({
     marginBottom: "16px"
   },
   weatherCardGridContainer: {
-    // marginBottom: "2.5rem",
     width: "100%"
   },
   singleWeatherGrid: {
@@ -72,10 +70,15 @@ const styles = () => ({
     padding: "8px 16px",
     background: "linear-gradient(#0B067A, #4F1484)",
     color: "#fff",
-    borderRadius: "8px"
+    borderRadius: "8px",
+    margin: '8px'
   },
   superScript: {
     fontSize: "1.5rem"
+  },
+  chartContainer: {
+    width: '85vw', 
+    margin: '0 auto'
   }
 });
 
